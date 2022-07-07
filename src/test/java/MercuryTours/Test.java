@@ -1,7 +1,6 @@
 package MercuryTours;
 
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import static org.openqa.selenium.By.*;
 
