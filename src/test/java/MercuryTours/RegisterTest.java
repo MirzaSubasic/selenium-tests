@@ -1,5 +1,6 @@
 package MercuryTours;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
@@ -62,20 +63,32 @@ public class RegisterTest {
         Thread.sleep(2500);
         //check if register is successful
         String successfulRegisterUrk = "https://demo.guru99.com/test/newtours/register_sucess.php";
-        if(successfulRegisterUrk.contentEquals(driver.getCurrentUrl()))
-            System.out.println("Test passed. User is registered");
+        if(successfulRegisterUrk.contentEquals(driver.getCurrentUrl())){
+            System.out.println("Test passed. Register successful");
+            Thread.sleep(2000);
+            driver.findElement(linkText("SIGN-OFF")).click();
+            System.out.println("Signed out");
+            String homePageUrl = "https://demo.guru99.com/test/newtours/index.php";
+            if(!homePageUrl.contentEquals(driver.getCurrentUrl()))
+                driver.navigate().to(homePageUrl);
+            System.out.println("Returned to home page");
+        }
         else
             System.out.println("Test failed. User not registered");
-
-
         Thread.sleep(2000);
-        driver.findElement(linkText("SIGN-OFF")).click();
-        System.out.println("Signed out");
-        String homePageUrl = "https://demo.guru99.com/test/newtours/index.php";
-        if(!homePageUrl.contentEquals(driver.getCurrentUrl()))
-            driver.navigate().to(homePageUrl);
-        System.out.println("Returned to home page");
-        Thread.sleep(1500);
+
+
+        //register when all fields are empty
+        driver.findElement(linkText("REGISTER")).click();
+        WebElement submit1 = driver.findElement(name("submit"));
+        Thread.sleep(2000);
+        //all fields are empty by default, click submit button
+        submit1.click();
+        String registerURL = "https://demo.guru99.com/test/newtours/register.php";
+        if(!registerURL.contentEquals(driver.getCurrentUrl()))
+            System.out.println("Test failed. User registered");
+        else
+            System.out.println("Test passed. User didnt register");
 
         driver.close();
     }
